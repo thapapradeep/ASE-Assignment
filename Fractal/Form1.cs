@@ -24,6 +24,7 @@ namespace Fractal
         private Graphics g1;
         private HSB HSBcol = new HSB();
         private Pen pen;
+        private bool clicked;
 
 
 
@@ -50,6 +51,7 @@ namespace Fractal
             picture = new Bitmap(x1, y1);
             g1 = Graphics.FromImage(picture);
             finished = true;
+            clicked = false;
         }
         public void start()
         {
@@ -166,25 +168,33 @@ namespace Fractal
 
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
-           
-            if (action)
+
+            clicked = true;
             {
-                xs = e.X;
-                ys = e.Y;
+                action = true;
+                if (action)
+                {
+                    xs = e.X;
+                    ys = e.Y;
+                }
             }
+
         }
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
             
-            if (action)
+            if (clicked)
             {
-                xe = e.X;
-                ye = e.Y;
-                rectangle = true;
+                if (action)
+                {
+                    xe = e.X;
+                    ye = e.Y;
+                    rectangle = true;
 
-                update();
-                Refresh();
+                    update();
+
+                }
             }
         }
 
@@ -223,7 +233,7 @@ namespace Fractal
                 yzoom = (yende - ystart) / (double)y1;
                 mandelbrot();
                 rectangle = false;
-
+                clicked = false;
                 update();
             }
         }
