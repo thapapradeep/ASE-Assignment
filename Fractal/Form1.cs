@@ -23,14 +23,17 @@ namespace Fractal
         private static double xstart, ystart, xende, yende, xzoom, yzoom;
         private static float xy;
         private Image picture;
-        private Graphics g1;
+        private Graphics g1, obj;
         private HSB HSBcol = new HSB();
         private Pen pen;
         private bool clicked;
+        private bool isNew;
 
 
 
         private static bool action, rectangle, finished;
+
+
         public Form1()
         {
             InitializeComponent();
@@ -54,6 +57,7 @@ namespace Fractal
             g1 = Graphics.FromImage(picture);
             finished = true;
             clicked = false;
+            isNew = true;
         }
         public void start()
         {
@@ -67,7 +71,7 @@ namespace Fractal
         }
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
-            Graphics obj = e.Graphics;
+            obj = e.Graphics;
             obj.DrawImage(picture, new Point(0, 0));
             
 
@@ -131,24 +135,30 @@ namespace Fractal
         private void initvalues() // reset start values
         {
             //Reading the values from saved text file
-            StreamReader sr = new StreamReader("property.txt");
-            String line = "";
-            int counter = 0;
-            string[] array = new String[4];
-            while ((line = sr.ReadLine()) != null)
+            if (isNew)
             {
-                counter++;
-                array[counter-1]=line;
+                StreamReader sr = new StreamReader("property.txt");
+                String line = "";
+                int counter = 0;
+                string[] array = new String[4];
+                while ((line = sr.ReadLine()) != null)
+                {
+                    counter++;
+                    array[counter - 1] = line;
+                }
+                sr.Close();
+                xstart = Double.Parse(array[0]);
+                ystart = Double.Parse(array[1]);
+                xende = Double.Parse(array[2]);
+                yende = Double.Parse(array[3]);
             }
-            sr.Close();
-            xstart = Double.Parse(array[0]);
-            ystart = Double.Parse(array[1]);
-            xende = Double.Parse(array[2]);
-            yende = Double.Parse(array[3]);
-           // xstart = SX;
-            //ystart = SY;
-            //xende = EX;
-            //yende = EY;
+            else
+            {
+                xstart = SX;
+                 ystart = SY;
+                 xende = EX;
+                 yende = EY;
+            }
             if ((float)((xende - xstart) / (yende - ystart)) != xy)
                 xstart = xende - (yende - ystart) * (double)xy;
         }
@@ -212,7 +222,7 @@ namespace Fractal
                     update();
 
                 }
-            }
+           }
         }
 
         private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
@@ -251,6 +261,7 @@ namespace Fractal
                 mandelbrot();
                 rectangle = false;
                 clicked = false;
+                isNew = false;
                 update();
                 StreamWriter File = new StreamWriter("property.txt");
                 File.Write(xstart +Environment.NewLine);
@@ -261,6 +272,6 @@ namespace Fractal
                 File.Close();
             }
         }
-
+       
     }
 }
