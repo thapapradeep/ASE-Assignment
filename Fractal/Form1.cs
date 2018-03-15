@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -67,7 +69,7 @@ namespace Fractal
         {
             Graphics obj = e.Graphics;
             obj.DrawImage(picture, new Point(0, 0));
-            Console.WriteLine("Works");
+            
 
         }
      
@@ -128,10 +130,25 @@ namespace Fractal
 
         private void initvalues() // reset start values
         {
-            xstart = SX;
-            ystart = SY;
-            xende = EX;
-            yende = EY;
+            //Reading the values from saved text file
+            StreamReader sr = new StreamReader("property.txt");
+            String line = "";
+            int counter = 0;
+            string[] array = new String[4];
+            while ((line = sr.ReadLine()) != null)
+            {
+                counter++;
+                array[counter-1]=line;
+            }
+            sr.Close();
+            xstart = Double.Parse(array[0]);
+            ystart = Double.Parse(array[1]);
+            xende = Double.Parse(array[2]);
+            yende = Double.Parse(array[3]);
+           // xstart = SX;
+            //ystart = SY;
+            //xende = EX;
+            //yende = EY;
             if ((float)((xende - xstart) / (yende - ystart)) != xy)
                 xstart = xende - (yende - ystart) * (double)xy;
         }
@@ -235,6 +252,13 @@ namespace Fractal
                 rectangle = false;
                 clicked = false;
                 update();
+                StreamWriter File = new StreamWriter("property.txt");
+                File.Write(xstart +Environment.NewLine);
+                File.Write(ystart  + Environment.NewLine);
+                File.Write(xende + Environment.NewLine);
+                File.Write(yende);
+
+                File.Close();
             }
         }
 
