@@ -33,6 +33,25 @@ namespace Fractal
 
         private static bool action, rectangle, finished;
 
+     
+
+        private void cloneToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form1 fn = new Form1();
+            fn.Show(); 
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult messagebox = MessageBox.Show("Are you sure ?", "Exit", MessageBoxButtons.YesNo);
+            if (messagebox == DialogResult.Yes)
+            {
+                this.Close();
+            }
+    
+        }
+
+      
 
         public Form1()
         {
@@ -76,7 +95,20 @@ namespace Fractal
             
 
         }
-     
+        private void restartToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            start();
+            isNew = false;
+            mandelbrot();
+            update();
+           
+        }
+        private void stopToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+           
+        }
+
         private void mandelbrot() // calculate all points
         {
             int x, y;
@@ -268,7 +300,6 @@ namespace Fractal
                 File.Write(ystart  + Environment.NewLine);
                 File.Write(xende + Environment.NewLine);
                 File.Write(yende);
-
                 File.Close();
             }
         }
