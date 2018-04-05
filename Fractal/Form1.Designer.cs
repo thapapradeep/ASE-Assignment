@@ -29,6 +29,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.menuStrip2 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -42,6 +43,9 @@
             this.changeColourToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.info = new System.Windows.Forms.TextBox();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.startCyclingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.stopCyclingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -123,7 +127,9 @@
             // editToolStripMenuItem
             // 
             this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.changeColourToolStripMenuItem});
+            this.changeColourToolStripMenuItem,
+            this.startCyclingToolStripMenuItem,
+            this.stopCyclingToolStripMenuItem});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
             this.editToolStripMenuItem.Text = "Edit";
@@ -156,6 +162,24 @@
             this.info.Size = new System.Drawing.Size(544, 20);
             this.info.TabIndex = 2;
             // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // startCyclingToolStripMenuItem
+            // 
+            this.startCyclingToolStripMenuItem.Name = "startCyclingToolStripMenuItem";
+            this.startCyclingToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.startCyclingToolStripMenuItem.Text = "Start Cycling";
+            this.startCyclingToolStripMenuItem.Click += new System.EventHandler(this.startCyclingToolStripMenuItem_Click);
+            // 
+            // stopCyclingToolStripMenuItem
+            // 
+            this.stopCyclingToolStripMenuItem.Name = "stopCyclingToolStripMenuItem";
+            this.stopCyclingToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.stopCyclingToolStripMenuItem.Text = "Stop Cycling";
+            this.stopCyclingToolStripMenuItem.Click += new System.EventHandler(this.stopCyclingToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.ClientSize = new System.Drawing.Size(799, 477);
@@ -164,6 +188,7 @@
             this.Controls.Add(this.menuStrip2);
             this.MainMenuStrip = this.menuStrip2;
             this.Name = "Form1";
+            this.Text = "Mandlebrot";
             this.menuStrip2.ResumeLayout(false);
             this.menuStrip2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -190,6 +215,9 @@
         private System.Windows.Forms.ToolStripMenuItem stopToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem changeColourToolStripMenuItem;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.ToolStripMenuItem startCyclingToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem stopCyclingToolStripMenuItem;
     }
 }
 

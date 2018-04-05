@@ -30,7 +30,7 @@ namespace Fractal
         private Pen pen;
         private bool clicked;
         private bool isNew , first, onn;
-        private int num1, num2, num3, num4, value;
+        private int num1, num2, num3, num4, value,timerInt;
 
 
 
@@ -44,6 +44,24 @@ namespace Fractal
             fn.Show(); 
         }
 
+        private void startCyclingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            timer1.Start();
+        }
+
+        private void stopCyclingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            timer1.Stop();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            RandomNum();
+            value = 1;
+            mandelbrot();
+            update();
+        }
+
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DialogResult messagebox = MessageBox.Show("Are you sure ?", "Exit", MessageBoxButtons.YesNo);
@@ -53,21 +71,7 @@ namespace Fractal
             }
     
         }
-       /* private void ThreadMethod()
-        {
-            for (int i = 0; i<10; i++)
-            {
-                RandomNum();
-                mandelbrot();
-                update();
-            }
-
-        }
-        private void startToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            Thread th = new Thread(new ThreadStart(ThreadMethod));
-            th.Start();
-        }*/
+       
 
         public Form1()
         {
@@ -96,10 +100,12 @@ namespace Fractal
             first = true;
             value = 0;
             onn = true;
+            timerInt = 0;
         }
 
         private void changeColourToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            timerInt++;
             RandomNum();
             value = 1;
             mandelbrot();
@@ -142,10 +148,12 @@ namespace Fractal
         }
         private void restartToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            initvalues();
             start();
+            value = 0;
             mandelbrot();
             update();
-           
+            
         }
         private void stopToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -158,6 +166,9 @@ namespace Fractal
         private void startToolStripMenuItem_Click(object sender, EventArgs e)
         {
             pictureBox1.Show();
+            editToolStripMenuItem.Enabled = true;
+            cloneToolStripMenuItem.Enabled = true;
+            restartToolStripMenuItem.Enabled = true;
         }
 
 
@@ -176,8 +187,8 @@ namespace Fractal
             
             action = false;
             //Dispalying message in text box before mandelbrot is ready
-           // info.Text = "Mandelbrot-Set will be produced - please wait...";
-            //info.Enabled = false;
+            info.Text = "Mandelbrot-Set will be produced - please wait...";
+            info.Enabled = false;
             for (x=0 ; x < x1; x += 2)
             {
                 for (y = 0; y < y1; y++)
@@ -206,7 +217,7 @@ namespace Fractal
             }
             //Displaying message after mandlebrot is ready
             Cursor.Current = Cursors.Cross;
-            //info.Text = "Mandelbrot-Set ready - please select zoom area with pressed mouse.";
+            info.Text = "Mandelbrot-Set ready - please select zoom area with pressed mouse.";
             info.Enabled=false;
             action = true;
         }
@@ -234,7 +245,7 @@ namespace Fractal
                 StreamReader sr = new StreamReader("property.txt");
                 String line = "";
                 int counter = 0;
-                string[] array = new String[4];
+                string[] array = new String[7];
                 while ((line = sr.ReadLine()) != null)
                 {
                     counter++;
@@ -245,6 +256,10 @@ namespace Fractal
                 ystart = Double.Parse(array[1]);
                 xende = Double.Parse(array[2]);
                 yende = Double.Parse(array[3]);
+                num1 = int.Parse(array[4]);
+                num2 = int.Parse(array[5]);
+                num3 = int.Parse(array[6]);
+                value = 1;
                 isNew = false;
             }
             else
@@ -313,7 +328,6 @@ namespace Fractal
                     xe = e.X;
                     ye = e.Y;
                     rectangle = true;
-
                     update();
 
                 }
@@ -365,8 +379,13 @@ namespace Fractal
                 File.Write(xstart +Environment.NewLine);
                 File.Write(ystart  + Environment.NewLine);
                 File.Write(xende + Environment.NewLine);
-                File.Write(yende);
+                File.Write(yende+ Environment.NewLine);
+                File.Write(num1 + Environment.NewLine);
+                File.Write(num2 + Environment.NewLine);
+                File.Write(num3);
+                
                 File.Close();
+                Console.WriteLine(num1 + " " + num2 + " " + num3);
             }
         }
        
