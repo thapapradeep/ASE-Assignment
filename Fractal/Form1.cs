@@ -54,6 +54,16 @@ namespace Fractal
             timer1.Stop();
         }
 
+        private void aboutProgramToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Program Name: Mandlebrot"+ Environment.NewLine
+                +"-->Author Name: Pridip Thapa"+ Environment.NewLine
+                + "-->Drag the mouse to select the particular area to zoom in" + Environment.NewLine
+                + "-->Click the picture to zoom out to initial position" + Environment.NewLine
+                + "-->Use the EDIT icon to manipulate the colour" + Environment.NewLine
+                + "-->You can also save the image using the SAVE icon");
+        }
+
         private void timer1_Tick(object sender, EventArgs e)
         {
             RandomNum();
@@ -385,7 +395,7 @@ namespace Fractal
                 File.Write(num3);
                 
                 File.Close();
-                Console.WriteLine(num1 + " " + num2 + " " + num3);
+                
             }
         }
        
